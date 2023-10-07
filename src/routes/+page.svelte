@@ -68,25 +68,27 @@
 	}
 
 	onMount(async () => {
-		const response = await fetch("/data.json");
-		releases = await response.json();
+    try {
+      const response = await fetch('https://cdn.jonasjones.dev/api/kcomebacks/data.json');
+      if (response.ok) {
+        releases = await response.json();
 
-		// Extract unique release types from the releases array
-		releaseTypes = Array.from(
-			new Set(
-				releases.map((release) => {
-					return release.releaseType === null
-						? "Unknown"
-						: release.releaseType;
-				})
-			)
-		);
+        // Extract unique release types from the releases array
+        releaseTypes = Array.from(new Set(releases.map(release => {
+          return release.releaseType === null ? 'Unknown' : release.releaseType;
+        })));
 
-		// Sort releases by date from most recent to least recent
-		releases.sort((a, b) => new Date(b.date) - new Date(a.date));
+        // Sort releases by date from most recent to least recent
+        releases.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-		filterReleases(); // Initial filtering based on default values
-	});
+        filterReleases(); // Initial filtering based on default values
+      } else {
+        console.error('Failed to fetch data:', response.status);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  });
 </script>
 
 <div class="container">
