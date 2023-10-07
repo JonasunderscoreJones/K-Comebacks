@@ -222,7 +222,7 @@
 </div>
 
 <style>
-	@import url("/global.css");
+	@import "../styles/global.css";
 	.title {
 		color: var(--color-primary);
 	}
