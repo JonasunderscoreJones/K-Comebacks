@@ -1,6 +1,6 @@
 :root {
 	--color-primary: white;
-	--color-secondary: blac;
+	--color-secondary: black;
 	--background-color: white;
 }
 
@@ -66,7 +66,7 @@ input, button, select, textarea {
 	border: 1px solid #ccc;
 	border-radius: 2px;
 	background-color: var(--background-color);
-	color: var(--color-primary);
+	color: var(--color-secondary);
 }
 
 input:disabled {
@@ -74,7 +74,7 @@ input:disabled {
 }
 
 button {
-	color: var(--color-primary);
+	color: var(--color-secondary);
 	background-color: var(--background-color);
 	outline: none;
 }
@@ -89,4 +89,8 @@ button:not(:disabled):active {
 
 button:focus {
 	border-color: #666;
+}
+
+th {
+	color: var(--color-secondary);
 }
