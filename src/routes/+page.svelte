@@ -8,7 +8,7 @@
 	let startDate = null;
 	let endDate = null;
 	let filteredReleases = [];
-	let pageSize = 10;
+	let pageSize = 50;
 	let currentPage = 1;
 	let releaseTypes = [];
 	let totalPages = 1;
