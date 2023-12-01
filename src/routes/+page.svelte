@@ -13,6 +13,8 @@
 	let releaseTypes = [];
 	let totalPages = 1;
 	let pages = [];
+	let last_update = "Loading...";
+	let loading = "Loading...";
 
 	function sortByColumn(column) {
 		// Sort releases based on the selected column
@@ -36,9 +38,10 @@
 				.includes(searchTitle.toLowerCase());
 			const releaseTypeMatch =
 				selectedRelease === "" ||
-				(release.releaseType === null
+				(release.type === null
 					? "Unknown"
-					: release.releaseType) === selectedRelease;
+					: release.type) === selectedRelease ||
+					release.type.includes(selectedRelease);
 			const dateMatch =
 				(!startDate || new Date(release.date) >= startDate) &&
 				(!endDate || new Date(release.date) <= endDate);
@@ -69,19 +72,28 @@
 
 	onMount(async () => {
     try {
-      const response = await fetch('https://cdn.jonasjones.dev/api/kcomebacks/data.json');
+      const response = await fetch('https://cdn.jonasjones.dev/api/kcomebacks/rkpop_data.json');
+	  //const response = await fetch('/rkpop_data.json')
       if (response.ok) {
         releases = await response.json();
 
+		last_update = releases[0].last_update;
+		releases.shift();
+
         // Extract unique release types from the releases array
         releaseTypes = Array.from(new Set(releases.map(release => {
-          return release.releaseType === null ? 'Unknown' : release.releaseType;
+          return release.type === null ? 'Unknown' : release.type;
         })));
+
+		// releaseTypes should be an array of all elements of all the release.type lists of all releases
+		releaseTypes = releaseTypes.flat();
 
         // Sort releases by date from most recent to least recent
         releases.sort((a, b) => new Date(b.date) - new Date(a.date));
 
         filterReleases(); // Initial filtering based on default values
+
+		loading = "";
       } else {
         console.error('Failed to fetch data:', response.status);
       }
@@ -194,6 +206,7 @@
 		</div>
 	</div>
 	<p>Click on the column title to filter by them</p>
+	<p>Last updated: {last_update}</p>
 	<table>
 		<thead>
 			<tr>
@@ -201,26 +214,27 @@
 				<th on:click={() => sortByColumn("date")}>Date</th>
 				<th on:click={() => sortByColumn("artist")}>Artist</th>
 				<th on:click={() => sortByColumn("title")}>Title</th>
-				<th on:click={() => sortByColumn("releaseType")}>Release Type</th>
+				<th on:click={() => sortByColumn("type")}>Release Type</th>
 			</tr>
 		</thead>
 		<tbody>
 			{#each filteredReleases as release}
 				<tr>
 					<!--calculate the release number-->
-					<td>{releases.indexOf(release) + 1}</td>
+					<td>{releases.length - releases.indexOf(release)}</td>
 					<td>{release.date}</td>
 					<td>{release.artist}</td>
 					<td>{release.title}</td>
 					<td
-						>{release.releaseType === null
+						>{release.type === null
 							? "Unknown"
-							: release.releaseType}</td
+							: release.type}</td
 					>
 				</tr>
 			{/each}
 		</tbody>
 	</table>
+	<h1>{loading}</h1>
 </div>
 
 <style>
