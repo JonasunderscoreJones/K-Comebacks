@@ -231,7 +231,8 @@
 					<td
 						>{release.type === null
 							? "Unknown"
-							: release.type}</td
+							// show the release.type list as a comma separated string
+							: release.type.join(", ")}</td
 					>
 				</tr>
 			{/each}
