@@ -88,6 +88,9 @@
 		// releaseTypes should be an array of all elements of all the release.type lists of all releases
 		releaseTypes = releaseTypes.flat();
 
+		// eliminate duplicates
+		releaseTypes = [...new Set(releaseTypes)];
+
         // Sort releases by date from most recent to least recent
         releases.sort((a, b) => new Date(b.date) - new Date(a.date));
 
