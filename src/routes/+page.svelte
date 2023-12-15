@@ -38,10 +38,10 @@
 				.includes(searchTitle.toLowerCase());
 			const releaseTypeMatch =
 				selectedRelease === "" ||
-				(release.type === null
+				(release.types === null
 					? "Unknown"
-					: release.type) === selectedRelease ||
-					release.type.includes(selectedRelease);
+					: release.types) === selectedRelease ||
+					release.types.includes(selectedRelease);
 			const dateMatch =
 				(!startDate || new Date(release.date) >= startDate) &&
 				(!endDate || new Date(release.date) <= endDate);
@@ -82,10 +82,10 @@
 
         // Extract unique release types from the releases array
         releaseTypes = Array.from(new Set(releases.map(release => {
-          return release.type === null ? 'Unknown' : release.type;
+          return release.types === null ? 'Unknown' : release.types;
         })));
 
-		// releaseTypes should be an array of all elements of all the release.type lists of all releases
+		// releaseTypes should be an array of all elements of all the release.types lists of all releases
 		releaseTypes = releaseTypes.flat();
 
 		// eliminate duplicates
@@ -217,7 +217,7 @@
 				<th on:click={() => sortByColumn("date")}>Date</th>
 				<th on:click={() => sortByColumn("artist")}>Artist</th>
 				<th on:click={() => sortByColumn("title")}>Title</th>
-				<th on:click={() => sortByColumn("type")}>Release Type</th>
+				<th on:click={() => sortByColumn("type")}>Release Types</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -229,10 +229,10 @@
 					<td>{release.artist}</td>
 					<td>{release.title}</td>
 					<td
-						>{release.type === null
+						>{release.types === null
 							? "Unknown"
-							// show the release.type list as a comma separated string
-							: release.type.join(", ")}</td
+							// show the release.types list as a comma separated string
+							: release.types.join(", ")}</td
 					>
 				</tr>
 			{/each}
