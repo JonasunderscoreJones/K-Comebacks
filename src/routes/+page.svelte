@@ -106,6 +106,8 @@
   });
 </script>
 
+<title>K-Pop Comebacks</title>
+
 <div class="container">
 	<div class="title-banner">
 		<h1 class="title">K-Comebacks</h1>
