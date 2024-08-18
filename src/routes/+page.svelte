@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from "svelte";
+	import { recordRequest } from "./analytics";
 
 	let releases = [];
 	let searchArtist = "";
@@ -71,6 +72,7 @@
 	}
 
 	onMount(async () => {
+	recordRequest();
     try {
       const response = await fetch('https://cdn.jonasjones.dev/api/kcomebacks/rkpop_data.json');
 	  //const response = await fetch('/rkpop_data.json')
