@@ -44,8 +44,8 @@
 					: release.types) === selectedRelease ||
 					release.types.includes(selectedRelease);
 			const dateMatch =
-				(!startDate || new Date(release.date) >= startDate) &&
-				(!endDate || new Date(release.date) <= endDate);
+				(!startDate || new Date(release.date) >= new Date(startDate)) &&
+				(!endDate || new Date(release.date) <= new Date(endDate));
 			return artistMatch && titleMatch && releaseTypeMatch && dateMatch;
 		});
 
